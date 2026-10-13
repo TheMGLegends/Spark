@@ -104,7 +104,7 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Zoom"",
                     ""type"": ""Value"",
-                    ""id"": ""8935faac-cd76-4db1-8cbb-4bca22e63802"",
+                    ""id"": ""06079329-4e05-4eb9-aae8-12d1204b7d3a"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -112,12 +112,12 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""AdjustSpeed"",
-                    ""type"": ""Value"",
-                    ""id"": ""06079329-4e05-4eb9-aae8-12d1204b7d3a"",
-                    ""expectedControlType"": ""Axis"",
+                    ""type"": ""Button"",
+                    ""id"": ""37191431-b185-481f-bcca-857d03e43820"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,48 +177,48 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""a711cf05-7776-49fa-a6ed-bc08489f02f3"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": ""Invert"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""Scroll Wheel"",
-                    ""id"": ""47b5a85b-0cfd-40cb-91fe-63cb7a44e921"",
+                    ""id"": ""35dd6d6d-8f4b-4d1f-9196-ec96ad8576c0"",
                     ""path"": ""OneModifier(modifiersOrder=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Zoom"",
+                    ""action"": ""AdjustSpeed"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""3c3d6a84-b33f-4158-bddb-cc46cf4cea8a"",
+                    ""id"": ""6c3c8f4c-8a0e-4ae2-bb31-f8199fcea47b"",
                     ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Zoom"",
+                    ""action"": ""AdjustSpeed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""binding"",
-                    ""id"": ""8a39634b-5ac2-478c-8cfe-f924664d4571"",
-                    ""path"": ""<Mouse>/scroll/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a711cf05-7776-49fa-a6ed-bc08489f02f3"",
+                    ""id"": ""3de844c2-0bb3-46d2-9f05-4ac84782747b"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""AdjustSpeed"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 }
             ]
         }

@@ -1,30 +1,82 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TopDownController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField, Min(0.1f)] private Vector2 movementSpeedBounds = new(0.1f, 10.0f);
-    [SerializeField] private float movementSpeed = 1.0f;
+    [SerializeField] private Vector2 movementSpeedBounds;
+    [SerializeField] private float movementSpeed;
+
+    [Header("Zoom Settings")]
+    [SerializeField] private Vector2 zoomBounds;
+    [SerializeField, Min(0.1f)] private float zoomSpeed;
 
     [Header("Speed Adjustment Settings")]
-    [SerializeField, Range(0.1f, 1.0f)] private float adjustmentSpeed = 0.4f;
+    [SerializeField, Min(0.1f)] private float adjustmentSpeed;
+
+    [Header("General Settings")]
+    [SerializeField, Range(0.0f, 1.0f)] private float smoothTime;
+
+    [Header("References")]
+    [SerializeField] private new Camera camera;
+
+    // Zoom Settings
+    private float targetZoom;
+    private float zoomVelocity;
+
+    // Speed Adjustment Settings
+    private float targetSpeed;
+    private float speedVelocity;
 
     private IA_TopDown inputActions;
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        ValidateMinMaxMovementSpeeds();
-        ValidateMovementSpeed();
+        ValidateMovementSpeedBounds();
+        ValidateZoomBounds();
     }
 
-    private void ValidateMinMaxMovementSpeeds()
+    private void ValidateMovementSpeedBounds()
     {
-        if (movementSpeedBounds.y < movementSpeedBounds.x)
+        if (movementSpeedBounds.x > movementSpeedBounds.y)
         {
-            movementSpeedBounds.y = movementSpeedBounds.x + 1.0f;
+            movementSpeedBounds.x = movementSpeedBounds.y;
+        }
+
+        if (movementSpeedBounds.x < 0.1f)
+        {
+            movementSpeedBounds.x = 0.1f;
+        }
+
+        if (movementSpeedBounds.y < 0.1f)
+        {
+            movementSpeedBounds.y = 0.1f;
+        }
+
+        movementSpeed = Mathf.Clamp(movementSpeed, movementSpeedBounds.x, movementSpeedBounds.y);
+    }
+
+    private void ValidateZoomBounds()
+    {
+        if (zoomBounds.x > zoomBounds.y)
+        {
+            zoomBounds.x = zoomBounds.y;
+        }
+
+        if (zoomBounds.x < 0.1f)
+        {
+            zoomBounds.x = 0.1f;
+        }
+
+        if (zoomBounds.y < 0.1f)
+        {
+            zoomBounds.y = 0.1f;
+        }
+
+        if (zoomBounds.y > 179.0f)
+        {
+            zoomBounds.y = 179.0f;
         }
     }
 #endif
@@ -32,48 +84,62 @@ public class TopDownController : MonoBehaviour
     private void Awake()
     {
         inputActions = new IA_TopDown();
-        inputActions.Player.Enable();
     }
 
     private void OnEnable()
     {
-        inputActions.Player.Zoom.performed += OnZoom;
-        inputActions.Player.AdjustSpeed.performed += OnAdjustSpeed;
+        inputActions.Player.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Zoom.performed -= OnZoom;
-        inputActions.Player.AdjustSpeed.performed -= OnAdjustSpeed;
+        inputActions.Player.Disable();
+    }
+
+    private void Start()
+    {
+        targetZoom = camera ? camera.fieldOfView : 60.0f;
+        targetSpeed = movementSpeed;
     }
 
     private void Update()
     {
         OnMove();
+        OnZoom();
+        OnAdjustSpeed();
     }
 
     private void OnMove()
     {
-        Vector2 inputVector = inputActions.Player.Move.ReadValue<Vector2>();
-        transform.position += movementSpeed * Time.deltaTime * new Vector3(inputVector.x, 0.0f, inputVector.y);
+        Vector2 input = inputActions.Player.Move.ReadValue<Vector2>();
+        transform.position += movementSpeed * Time.deltaTime * new Vector3(input.x, 0.0f, input.y);
     }
 
-    private void OnZoom(InputAction.CallbackContext context)
+    private void OnZoom()
     {
-        float input = inputActions.Player.Zoom.ReadValue<float>();
-        Debug.Log("zooming: " + input);
-        // TODO: Have it so it lerps smoothly
+        float scroll = inputActions.Player.Zoom.ReadValue<float>();
+        targetZoom += zoomSpeed * scroll;
+        ClampAndSmoothZoom();
     }
 
-    private void OnAdjustSpeed(InputAction.CallbackContext context)
+    private void OnAdjustSpeed()
     {
-        float input = inputActions.Player.AdjustSpeed.ReadValue<float>();
-        movementSpeed += adjustmentSpeed * input;
-        ValidateMovementSpeed();
+        float scroll = inputActions.Player.AdjustSpeed.ReadValue<float>();
+        targetSpeed += adjustmentSpeed * scroll;
+        ClampAndSmoothSpeed();
     }
 
-    private void ValidateMovementSpeed()
+    private void ClampAndSmoothZoom()
     {
-        movementSpeed = Mathf.Clamp(movementSpeed, movementSpeedBounds.x, movementSpeedBounds.y);
+        if (!camera) { return; }
+
+        targetZoom = Mathf.Clamp(targetZoom, zoomBounds.x, zoomBounds.y);
+        camera.fieldOfView = Mathf.SmoothDamp(camera.fieldOfView, targetZoom, ref zoomVelocity, smoothTime);
+    }
+
+    private void ClampAndSmoothSpeed()
+    {
+        targetSpeed = Mathf.Clamp(targetSpeed, movementSpeedBounds.x, movementSpeedBounds.y);
+        movementSpeed = Mathf.SmoothDamp(movementSpeed, targetSpeed, ref speedVelocity, smoothTime);
     }
 }
