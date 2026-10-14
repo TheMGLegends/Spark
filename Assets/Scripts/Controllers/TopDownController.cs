@@ -4,18 +4,18 @@ using UnityEngine;
 public class TopDownController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private Vector2 movementSpeedBounds;
-    [SerializeField] private float movementSpeed;
+    [SerializeField] private Vector2 movementSpeedBounds = new(1.0f, 10.0f);
+    [SerializeField] private float movementSpeed = 1.0f;
 
     [Header("Zoom Settings")]
-    [SerializeField] private Vector2 zoomBounds;
-    [SerializeField, Min(0.1f)] private float zoomSpeed;
+    [SerializeField] private Vector2 zoomBounds = new(30.0f, 90.0f);
+    [SerializeField, Min(0.1f)] private float zoomSpeed = 4.0f;
 
     [Header("Speed Adjustment Settings")]
-    [SerializeField, Min(0.1f)] private float adjustmentSpeed;
+    [SerializeField, Min(0.1f)] private float adjustmentSpeed = 0.4f;
 
     [Header("General Settings")]
-    [SerializeField, Range(0.0f, 1.0f)] private float smoothTime;
+    [SerializeField, Range(0.0f, 1.0f)] private float smoothTime = 0.25f;
 
     [Header("References")]
     [SerializeField] private new Camera camera;
@@ -28,7 +28,7 @@ public class TopDownController : MonoBehaviour
     private float targetSpeed;
     private float speedVelocity;
 
-    private IA_TopDown inputActions;
+    private IA_TopDown topDown;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -83,17 +83,17 @@ public class TopDownController : MonoBehaviour
 
     private void Awake()
     {
-        inputActions = new IA_TopDown();
+        topDown = new IA_TopDown();
     }
 
     private void OnEnable()
     {
-        inputActions.Player.Enable();
+        topDown.Player.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Disable();
+        topDown.Player.Disable();
     }
 
     private void Start()
@@ -111,20 +111,20 @@ public class TopDownController : MonoBehaviour
 
     private void OnMove()
     {
-        Vector2 input = inputActions.Player.Move.ReadValue<Vector2>();
-        transform.position += movementSpeed * Time.deltaTime * new Vector3(input.x, 0.0f, input.y);
+        Vector2 moveInput = topDown.Player.Move.ReadValue<Vector2>();
+        transform.position += movementSpeed * Time.deltaTime * new Vector3(moveInput.x, 0.0f, moveInput.y);
     }
 
     private void OnZoom()
     {
-        float scroll = inputActions.Player.Zoom.ReadValue<float>();
+        float scroll = topDown.Player.Zoom.ReadValue<float>();
         targetZoom += zoomSpeed * scroll;
         ClampAndSmoothZoom();
     }
 
     private void OnAdjustSpeed()
     {
-        float scroll = inputActions.Player.AdjustSpeed.ReadValue<float>();
+        float scroll = topDown.Player.AdjustSpeed.ReadValue<float>();
         targetSpeed += adjustmentSpeed * scroll;
         ClampAndSmoothSpeed();
     }
