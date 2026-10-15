@@ -4,8 +4,7 @@ using UnityEngine;
 public class FirstPersonController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float movementSpeed = 2.0f;
-    [SerializeField] private float linearDamping = 10.0f;
+    [SerializeField, Min(0.1f)] private float movementSpeed = 2.0f;
 
     [Header("Look Settings")]
     [SerializeField, Range(0.01f, 1.0f)] private float mouseSensitivity = 0.1f;
@@ -13,8 +12,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private new Camera camera;
-
-    // TODO: Validate Values in OnValidate
+    [SerializeField, ReadOnly] private new Rigidbody rigidbody;
 
     // Movement Settings
     private Vector2 moveInput;
@@ -24,15 +22,30 @@ public class FirstPersonController : MonoBehaviour
     private float verticalRotation;
 
     private IA_FirstPerson firstPerson;
-    private new Rigidbody rigidbody;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        ValidateMouseRange();
+    }
+
+    private void ValidateMouseRange()
+    {
+        if (mouseRange.x > mouseRange.y)
+        {
+            mouseRange.x = mouseRange.y;
+        }
+    }
+#endif
 
     private void Awake()
     {
         firstPerson = new IA_FirstPerson();
 
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rigidbody.freezeRotation = true;
-        rigidbody.linearDamping = linearDamping;
     }
 
     private void OnEnable()
@@ -69,7 +82,7 @@ public class FirstPersonController : MonoBehaviour
     private void OnMove()
     {
         Vector3 moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
-        rigidbody.AddForce(moveDirection.normalized * movementSpeed, ForceMode.VelocityChange);
+        rigidbody.linearVelocity = moveDirection.normalized * movementSpeed;
     }
 
     private void OnLook()

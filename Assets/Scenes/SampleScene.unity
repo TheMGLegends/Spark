@@ -833,11 +833,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91440030ea258de4e95062b0697bde12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonController
-  movementSpeed: 2
-  linearDamping: 10
+  movementSpeed: 5
   mouseSensitivity: 0.1
   mouseRange: {x: -90, y: 90}
   camera: {fileID: 330585545}
+  rigidbody: {fileID: 0}
 --- !u!54 &1635531487
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!1 &1677384284
 GameObject:
