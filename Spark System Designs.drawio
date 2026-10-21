@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="IQ-P-cKgYNqzu1JhmuLX">
-    <mxGraphModel dx="3744" dy="1823" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1808" dy="1255" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -94,7 +94,7 @@
         <mxCell id="eKk8V9CFJGvcSFXkHoSS-46" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- Start() : void" vertex="1">
           <mxGeometry height="26" width="310" y="204" as="geometry" />
         </mxCell>
-        <mxCell id="4jT4KfBERcmCdd3urc4p-22" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Connect(wireEnd : WireEnd, terminal : Terminal) : bool" vertex="1">
+        <mxCell id="4jT4KfBERcmCdd3urc4p-22" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Connect(wire : Wire, terminal : Terminal) : bool" vertex="1">
           <mxGeometry height="26" width="310" y="230" as="geometry" />
         </mxCell>
         <mxCell id="4jT4KfBERcmCdd3urc4p-28" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Disconnect(terminal : Terminal) : bool" vertex="1">
