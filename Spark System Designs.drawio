@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="IQ-P-cKgYNqzu1JhmuLX">
-    <mxGraphModel dx="1808" dy="1255" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1643" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -94,10 +94,10 @@
         <mxCell id="eKk8V9CFJGvcSFXkHoSS-46" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- Start() : void" vertex="1">
           <mxGeometry height="26" width="310" y="204" as="geometry" />
         </mxCell>
-        <mxCell id="4jT4KfBERcmCdd3urc4p-22" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Connect(wire : Wire, terminal : Terminal) : bool" vertex="1">
+        <mxCell id="4jT4KfBERcmCdd3urc4p-22" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Connect(wireEnd : WireEnd, terminal : Terminal) : bool" vertex="1">
           <mxGeometry height="26" width="310" y="230" as="geometry" />
         </mxCell>
-        <mxCell id="4jT4KfBERcmCdd3urc4p-28" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Disconnect(terminal : Terminal) : bool" vertex="1">
+        <mxCell id="4jT4KfBERcmCdd3urc4p-28" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Disconnect(wireEnd : WireEnd) : bool" vertex="1">
           <mxGeometry height="26" width="310" y="256" as="geometry" />
         </mxCell>
         <mxCell id="4jT4KfBERcmCdd3urc4p-23" parent="4jT4KfBERcmCdd3urc4p-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ GetTerminalA() : Terminal" vertex="1">
@@ -422,6 +422,24 @@
         </mxCell>
         <mxCell id="eKk8V9CFJGvcSFXkHoSS-70" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;color: light-dark(rgb(255, 0, 0), rgb(255, 144, 144));&quot;&gt;Make a traversal method that takes a starting terminal and has a return of the list of electrical devices it reached. Call it for both the positive and negative terminals for the power source device.&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(255, 0, 0), rgb(255, 144, 144));&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(255, 0, 0), rgb(255, 144, 144));&quot;&gt;Then if the device is on both lists, we know it was reached otherwise it was not and can appropriately PowerOn/Off and because we have a safe guard it will prevent a powered on device from power on again and vice versa.&lt;br&gt;&lt;br&gt;We should keep track of visited terminals so that we do not continue in an infinite loop&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="320" x="870" y="1230" as="geometry" />
+        </mxCell>
+        <mxCell id="taW5MygLJuY6vMWt_g4N-1" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=40;fillColor=#ffff88;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;strokeColor=#36393d;" value="&lt;div&gt;&amp;lt;&amp;lt;Enumeration&amp;gt;&amp;gt;&lt;/div&gt;&lt;b&gt;WireEnd&lt;/b&gt;" vertex="1">
+          <mxGeometry height="92" width="120" x="785" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="taW5MygLJuY6vMWt_g4N-2" parent="taW5MygLJuY6vMWt_g4N-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="A" vertex="1">
+          <mxGeometry height="26" width="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="taW5MygLJuY6vMWt_g4N-3" parent="taW5MygLJuY6vMWt_g4N-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="B" vertex="1">
+          <mxGeometry height="26" width="120" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="taW5MygLJuY6vMWt_g4N-6" edge="1" parent="1" source="taW5MygLJuY6vMWt_g4N-1" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=1.005;entryY=0.049;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryPerimeter=0;" target="4jT4KfBERcmCdd3urc4p-17" value="">
+          <mxGeometry relative="1" width="160" x="-0.4598" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="170" />
+            </Array>
+            <mxPoint x="450" y="155" as="sourcePoint" />
+            <mxPoint x="605" y="210" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

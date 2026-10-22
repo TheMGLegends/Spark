@@ -19,6 +19,11 @@ public class Terminal : MonoBehaviour
         TrySetConnectionPoint();
     }
 
+    private void OnDestroy()
+    {
+        Cleanup();
+    }
+
     public bool Attach(Wire wire)
     {
         if (!wire || IsWireConnected) { return false; }
@@ -38,10 +43,8 @@ public class Terminal : MonoBehaviour
     public bool DisconnectWire()
     {
         if (!IsWireConnected) { return false; }
-        // TODO: Wire Disconnect Function
-        //return connectedWire.Disconnect(this);
 
-        return true; // TEMP
+        return connectedWire.Disconnect(this);
     }
 
     private void TrySetOwner()
@@ -66,5 +69,10 @@ public class Terminal : MonoBehaviour
             connectionPoint = owner.transform;
             Message.LogWarning($"{gameObject.name}'s connectionPoint was not set in the editor, defaulting to {owner.name}'s transform as the connectionPoint.");
         }
+    }
+
+    private void Cleanup()
+    {
+        DisconnectWire();
     }
 }
