@@ -8,15 +8,15 @@ public class Terminal : MonoBehaviour
     [SerializeField] private CircuitRole terminalType;
     [SerializeField] private Transform connectionPoint; // TODO: Figure out how we use this connection point to set the wires location (Either set it in here [Terminal] or on wires end using connection point getter)
 
-    public IElectricalDevice Owner { get { return owner as IElectricalDevice; } }
-    public Wire ConnectedWire { get { return connectedWire; } }
+    public IElectricalDevice Owner => owner as IElectricalDevice;
+    public Wire ConnectedWire => connectedWire;
     public bool IsWireConnected => connectedWire;
-    public CircuitRole TerminalType { get { return terminalType; } }
+    public CircuitRole TerminalType => terminalType;
 
     private void Awake()
     {
-        TrySetOwner();
-        TrySetConnectionPoint();
+        SetOwner();
+        SetConnectionPoint();
     }
 
     private void OnDestroy()
@@ -47,7 +47,7 @@ public class Terminal : MonoBehaviour
         return connectedWire.Disconnect(this);
     }
 
-    private void TrySetOwner()
+    private void SetOwner()
     {
         IElectricalDevice electricalDevice = GetComponentInParent<IElectricalDevice>();
         if (electricalDevice != null)
@@ -60,7 +60,7 @@ public class Terminal : MonoBehaviour
         }
     }
 
-    private void TrySetConnectionPoint()
+    private void SetConnectionPoint()
     {
         if (!owner) { return; }
 

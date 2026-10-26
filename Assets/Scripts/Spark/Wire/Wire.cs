@@ -10,10 +10,10 @@ public class Wire : MonoBehaviour
     public event Action<Wire> OnConnected;
     public event Action<Wire> OnDisconnected;
 
-    public Terminal TerminalA { get { return terminalA; } }
-    public Terminal TerminalB { get { return terminalB; } }
+    public Terminal TerminalA => terminalA;
+    public Terminal TerminalB => terminalB;
     public bool IsFullyConnected => terminalA && terminalB;
-    public CircuitRole WireType { get { return wireType; } }
+    public CircuitRole WireType => wireType;
 
     private void Start()
     {
