@@ -1,5 +1,9 @@
-public interface IPowerSource
+
+namespace Spark
 {
-    public Terminal PositiveTerminal { get; }
-    public Terminal NegativeTerminal { get; }
+    public interface IPowerSource
+    {
+        public Terminal PositiveTerminal { get; }
+        public Terminal NegativeTerminal { get; }
+    }
 }

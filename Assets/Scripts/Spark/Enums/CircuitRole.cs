@@ -1,6 +1,9 @@
-public enum CircuitRole
+namespace Spark
 {
-    Live,
-    Neutral,
-    Ground
+    public enum CircuitRole
+    {
+        Live,
+        Neutral,
+        Ground
+    }
 }

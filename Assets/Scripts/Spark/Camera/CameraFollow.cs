@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+namespace Spark
 {
-    [SerializeField] private Transform target;
-
-    private void LateUpdate()
+    public class CameraFollow : MonoBehaviour
     {
-        if (!target) { return; }
+        [SerializeField] private Transform target;
 
-        transform.position = target.position;
+        private void LateUpdate()
+        {
+            if (!target) { return; }
+
+            transform.position = target.position;
+        }
     }
 }

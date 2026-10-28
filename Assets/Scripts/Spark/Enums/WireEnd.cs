@@ -1,5 +1,8 @@
-public enum WireEnd
+namespace Spark
 {
-    A,
-    B
+    public enum WireEnd
+    {
+        A,
+        B
+    }
 }

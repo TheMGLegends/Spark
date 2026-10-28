@@ -1,139 +1,142 @@
 using System;
 using UnityEngine;
 
-public class Wire : MonoBehaviour
+namespace Spark
 {
-    [SerializeField, ReadOnly] private Terminal terminalA;
-    [SerializeField, ReadOnly] private Terminal terminalB;
-    [SerializeField] private CircuitRole wireType;
-
-    public event Action<Wire> OnConnected;
-    public event Action<Wire> OnDisconnected;
-
-    public Terminal TerminalA => terminalA;
-    public Terminal TerminalB => terminalB;
-    public bool IsFullyConnected => terminalA && terminalB;
-    public CircuitRole WireType => wireType;
-
-    private void Start()
+    public class Wire : MonoBehaviour
     {
-        Initialise();
-    }
+        [SerializeField, ReadOnly] private Terminal terminalA;
+        [SerializeField, ReadOnly] private Terminal terminalB;
+        [SerializeField] private CircuitRole wireType;
 
-    private void OnDestroy()
-    {
-        Cleanup();
-    }
+        public event Action<Wire> OnConnected;
+        public event Action<Wire> OnDisconnected;
 
-    public bool Connect(WireEnd wireEnd, Terminal terminal)
-    {
-        Terminal currentTerminal = GetTerminal(wireEnd);
-        Terminal otherTerminal = GetOtherTerminal(wireEnd);
-        if (!terminal || currentTerminal || otherTerminal == terminal) { return false; }
+        public Terminal TerminalA => terminalA;
+        public Terminal TerminalB => terminalB;
+        public bool IsFullyConnected => terminalA && terminalB;
+        public CircuitRole WireType => wireType;
 
-        if (terminal.Attach(this))
+        private void Start()
         {
-            SetTerminal(wireEnd, terminal);
-            if (IsFullyConnected) { OnConnected?.Invoke(this); }
-
-            return true;
+            Initialise();
         }
 
-        return false;
-    }
-
-    public bool Disconnect(Terminal terminal)
-    {
-        if (TryGetEnd(terminal, out WireEnd wireEnd))
+        private void OnDestroy()
         {
-            return Disconnect(wireEnd);
+            Cleanup();
         }
 
-        return false;
-    }
-
-    public bool Disconnect(WireEnd wireEnd)
-    {
-        Terminal terminal = GetTerminal(wireEnd);
-        if (!terminal) { return false; }
-
-        if (terminal.Detach(this))
+        public bool Connect(WireEnd wireEnd, Terminal terminal)
         {
-            bool wasFullyConnected = IsFullyConnected;
-            SetTerminal(wireEnd, null);
-            if (wasFullyConnected) { OnDisconnected?.Invoke(this); }
+            Terminal currentTerminal = GetTerminal(wireEnd);
+            Terminal otherTerminal = GetOtherTerminal(wireEnd);
+            if (!terminal || currentTerminal || otherTerminal == terminal) { return false; }
 
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool TryGetEnd(Terminal terminal, out WireEnd wireEnd)
-    {
-        if (terminal)
-        {
-            if (terminal == terminalA)
+            if (terminal.Attach(this))
             {
-                wireEnd = WireEnd.A;
+                SetTerminal(wireEnd, terminal);
+                if (IsFullyConnected) { OnConnected?.Invoke(this); }
+
                 return true;
             }
-            else if (terminal == terminalB)
+
+            return false;
+        }
+
+        public bool Disconnect(Terminal terminal)
+        {
+            if (TryGetEnd(terminal, out WireEnd wireEnd))
             {
-                wireEnd = WireEnd.B;
+                return Disconnect(wireEnd);
+            }
+
+            return false;
+        }
+
+        public bool Disconnect(WireEnd wireEnd)
+        {
+            Terminal terminal = GetTerminal(wireEnd);
+            if (!terminal) { return false; }
+
+            if (terminal.Detach(this))
+            {
+                bool wasFullyConnected = IsFullyConnected;
+                SetTerminal(wireEnd, null);
+                if (wasFullyConnected) { OnDisconnected?.Invoke(this); }
+
                 return true;
+            }
+
+            return false;
+        }
+
+        public bool TryGetEnd(Terminal terminal, out WireEnd wireEnd)
+        {
+            if (terminal)
+            {
+                if (terminal == terminalA)
+                {
+                    wireEnd = WireEnd.A;
+                    return true;
+                }
+                else if (terminal == terminalB)
+                {
+                    wireEnd = WireEnd.B;
+                    return true;
+                }
+            }
+
+            wireEnd = default;
+            return false;
+        }
+
+        public Terminal GetOtherTerminal(Terminal terminal)
+        {
+            if (TryGetEnd(terminal, out WireEnd wireEnd))
+            {
+                return GetOtherTerminal(wireEnd);
+            }
+
+            return null;
+        }
+
+        public Terminal GetOtherTerminal(WireEnd wireEnd)
+        {
+            return wireEnd == WireEnd.A ? terminalB : terminalA;
+        }
+
+        private Terminal GetTerminal(WireEnd wireEnd)
+        {
+            return wireEnd == WireEnd.A ? terminalA : terminalB;
+        }
+
+        private void SetTerminal(WireEnd wireEnd, Terminal terminal)
+        {
+            switch (wireEnd)
+            {
+                case WireEnd.A:
+                    terminalA = terminal;
+                    break;
+                case WireEnd.B:
+                    terminalB = terminal;
+                    break;
+                default:
+                    break;
             }
         }
 
-        wireEnd = default;
-        return false;
-    }
-
-    public Terminal GetOtherTerminal(Terminal terminal)
-    {
-        if (TryGetEnd(terminal, out WireEnd wireEnd))
+        private void Initialise()
         {
-            return GetOtherTerminal(wireEnd);
+            CircuitSolver.Instance.RegisterWire(this);
         }
 
-        return null;
-    }
-
-    public Terminal GetOtherTerminal(WireEnd wireEnd)
-    {
-        return wireEnd == WireEnd.A ? terminalB : terminalA;
-    }
-
-    private Terminal GetTerminal(WireEnd wireEnd)
-    {
-        return wireEnd == WireEnd.A ? terminalA : terminalB;
-    }
-
-    private void SetTerminal(WireEnd wireEnd, Terminal terminal)
-    {
-        switch (wireEnd)
+        private void Cleanup()
         {
-            case WireEnd.A:
-                terminalA = terminal;
-                break;
-            case WireEnd.B:
-                terminalB = terminal;
-                break;
-            default:
-                break;
+            Disconnect(WireEnd.A);
+            Disconnect(WireEnd.B);
+
+            CircuitSolver.Instance.UnregisterWire(this);
         }
-    }
-
-    private void Initialise()
-    {
-        // TODO: Register Wire Instance and it's events with the Circuit Solver Singleton Here
-    }
-
-    private void Cleanup()
-    {
-        Disconnect(WireEnd.A);
-        Disconnect(WireEnd.B);
-
-        // TODO: Cleanup logic (Unregistering itself again from the Circuit Solver Singleton)
     }
 }

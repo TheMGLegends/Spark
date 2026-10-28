@@ -1,47 +1,50 @@
 using UnityEngine;
 
-public class Battery : ElectricalDeviceBase, IPowerSource
+namespace Spark
 {
-    [SerializeField, ReadOnly] private Terminal positiveTerminal;
-    [SerializeField, ReadOnly] private Terminal negativeTerminal;
-
-    public Terminal PositiveTerminal => positiveTerminal;
-
-    public Terminal NegativeTerminal => negativeTerminal;
-
-    public override bool CanCurrentPass(Terminal terminalA, Terminal terminalB)
+    public class Battery : ElectricalDeviceBase, IPowerSource
     {
-        return false;
-    }
+        private Terminal positiveTerminal;
+        private Terminal negativeTerminal;
 
-    protected override void SetTerminals()
-    {
-        base.SetTerminals();
+        public Terminal PositiveTerminal => positiveTerminal;
 
-        if (terminals.Count != 2)
-        {       
-            Message.LogError($"{gameObject.name} is a {typeof(Battery)}, meaning it requires a positive and negative terminal only. Currently there are {terminals.Count} terminals on this {typeof(Battery)}.");
-            return;
-        }
+        public Terminal NegativeTerminal => negativeTerminal;
 
-        Terminal terminalA = terminals[0];
-        CircuitRole terminalAType = terminalA.TerminalType;
-
-        Terminal terminalB = terminals[1];
-        CircuitRole terminalBType = terminalB.TerminalType;
-        if (terminalAType == terminalBType)
+        public override bool CanCurrentPass(Terminal terminalA, Terminal terminalB)
         {
-            Message.LogError($"{gameObject.name} is a {typeof(Battery)}, but has two {terminalAType} terminals. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
-            return;
+            return false;
         }
 
-        if (terminalAType == CircuitRole.Ground || terminalBType == CircuitRole.Ground)
+        protected override void SetTerminals()
         {
-            Message.LogError($"{gameObject.name} is a {typeof(Battery)}, but one of its terminals is a {CircuitRole.Ground} terminal. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
-            return;
-        }
+            base.SetTerminals();
 
-        positiveTerminal = terminalAType == CircuitRole.Live ? terminalA : terminalB;
-        negativeTerminal = terminalBType == CircuitRole.Neutral ? terminalB : terminalA;
+            if (terminals.Count != 2)
+            {
+                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, meaning it requires a positive and negative terminal only. Currently there are {terminals.Count} terminals on this {typeof(Battery)}.");
+                return;
+            }
+
+            Terminal terminalA = terminals[0];
+            CircuitRole terminalAType = terminalA.TerminalType;
+
+            Terminal terminalB = terminals[1];
+            CircuitRole terminalBType = terminalB.TerminalType;
+            if (terminalAType == terminalBType)
+            {
+                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, but has two {terminalAType} terminals. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
+                return;
+            }
+
+            if (terminalAType == CircuitRole.Ground || terminalBType == CircuitRole.Ground)
+            {
+                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, but one of its terminals is a {CircuitRole.Ground} terminal. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
+                return;
+            }
+
+            positiveTerminal = terminalAType == CircuitRole.Live ? terminalA : terminalB;
+            negativeTerminal = terminalBType == CircuitRole.Neutral ? terminalB : terminalA;
+        }
     }
 }
