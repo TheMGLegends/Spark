@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Spark
 {
     public class Battery : ElectricalDeviceBase, IPowerSource
@@ -22,7 +20,8 @@ namespace Spark
 
             if (terminals.Count != 2)
             {
-                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, meaning it requires a positive and negative terminal only. Currently there are {terminals.Count} terminals on this {typeof(Battery)}.");
+                string terminalCount = terminals.Count > 1 ? $"are {terminals.Count} terminals" : $"is {terminals.Count} terminal";
+                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, meaning it requires a positive and negative terminal only. Currently there {terminalCount} on the {typeof(Battery).Name}.");
                 return;
             }
 

@@ -5,12 +5,14 @@ namespace Spark
     [RequireComponent(typeof(BoxCollider))]
     public class Terminal : MonoBehaviour
     {
-        [SerializeField, ReadOnly] private MonoBehaviour owner; // TODO: Hacky way because it doesnt display interface solve this
+        [SerializeField, DisplayName("Owner"), ReadOnly] private MonoBehaviour owningDevice;
         [SerializeField, ReadOnly] private Wire connectedWire;
         [SerializeField] private CircuitRole terminalType;
-        [SerializeField] private Transform connectionPoint; // TODO: Figure out how we use this connection point to set the wires location (Either set it in here [Terminal] or on wires end using connection point getter)
+        [SerializeField] private Transform connectionPoint;
 
-        public IElectricalDevice Owner => owner as IElectricalDevice;
+        private IElectricalDevice owner;
+
+        public IElectricalDevice Owner => owner;
         public Wire ConnectedWire => connectedWire;
         public bool IsWireConnected => connectedWire;
         public CircuitRole TerminalType => terminalType;
@@ -54,7 +56,8 @@ namespace Spark
             IElectricalDevice electricalDevice = GetComponentInParent<IElectricalDevice>();
             if (electricalDevice != null)
             {
-                owner = electricalDevice as MonoBehaviour;
+                owningDevice = electricalDevice as MonoBehaviour;
+                owner = electricalDevice;
             }
             else
             {
@@ -64,12 +67,12 @@ namespace Spark
 
         private void SetConnectionPoint()
         {
-            if (!owner) { return; }
+            if (!owningDevice) { return; }
 
             if (!connectionPoint)
             {
-                connectionPoint = owner.transform;
-                Message.LogWarning($"{gameObject.name}'s connectionPoint was not set in the editor, defaulting to {owner.name}'s transform as the connectionPoint.");
+                connectionPoint = owningDevice.transform;
+                Message.LogWarning($"{gameObject.name}'s connectionPoint was not set in the editor, defaulting to {owningDevice.name}'s transform as the connectionPoint.");
             }
         }
 

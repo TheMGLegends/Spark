@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +9,10 @@ namespace Spark
         [SerializeField, ReadOnly] protected bool isPowered;
         [SerializeField, ReadOnly] protected List<Terminal> terminals = new();
 
-        // TODO: Potential need to announce a connectivity changed event
-
         public bool IsPowered => isPowered;
-
         public IReadOnlyList<Terminal> Terminals => terminals;
+
+        public event Action<IElectricalDevice> OnInternalConnectivityChanged;
 
         protected virtual void Awake()
         {
@@ -51,6 +51,11 @@ namespace Spark
 
         protected virtual void PowerOn() { Message.Log($"{gameObject.name} is powered on!"); }
         protected virtual void PowerOff() { Message.Log($"{gameObject.name} is powered off!"); }
+
+        protected void NotifyInternalConnectivityChanged()
+        {
+            OnInternalConnectivityChanged?.Invoke(this);
+        }
 
         protected virtual void SetTerminals()
         {

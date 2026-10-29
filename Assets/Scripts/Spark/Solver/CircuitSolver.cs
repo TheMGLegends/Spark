@@ -5,9 +5,11 @@ namespace Spark
 {
     public class CircuitSolver : MonoBehaviour
     {
-        [SerializeField, ReadOnly] private List<IElectricalDevice> electricalDevices = new(); // TODO: This doesnt show, solve later
+        [SerializeField, ReadOnly] private List<Object> devices = new();
         [SerializeField, ReadOnly] private List<Wire> wires = new();
         [SerializeField, ReadOnly] private bool isDirty = true;
+
+        private readonly List<IElectricalDevice> electricalDevices = new();
 
         public static CircuitSolver Instance { get; private set; }
 
@@ -35,7 +37,13 @@ namespace Spark
             if (electricalDevice == null || electricalDevices.Contains(electricalDevice)) { return false; }
 
             isDirty = true;
+            electricalDevice.OnInternalConnectivityChanged += ElectricalDevice_EventRaised;
             electricalDevices.Add(electricalDevice);
+
+#if UNITY_EDITOR
+            Object device = electricalDevice as Object;
+            if (device) { devices.Add(device); }
+#endif
 
             return true;
         }
@@ -45,6 +53,13 @@ namespace Spark
             if (electricalDevice == null || !electricalDevices.Contains(electricalDevice)) { return false; }
 
             isDirty = true;
+            electricalDevice.OnInternalConnectivityChanged -= ElectricalDevice_EventRaised;
+
+#if UNITY_EDITOR
+            Object device = electricalDevice as Object;
+            if (device) { devices.Remove(device); }
+#endif
+
             return electricalDevices.Remove(electricalDevice);
         }
 
@@ -134,6 +149,11 @@ namespace Spark
             }
 
             return reachedDevices;
+        }
+
+        private void ElectricalDevice_EventRaised(IElectricalDevice electricalDevice)
+        {
+            isDirty = true;
         }
 
         private void Wire_EventRaised(Wire wire)
