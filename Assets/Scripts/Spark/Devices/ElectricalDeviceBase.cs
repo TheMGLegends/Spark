@@ -52,11 +52,6 @@ namespace Spark
         protected virtual void PowerOn() { Message.Log($"{gameObject.name} is powered on!"); }
         protected virtual void PowerOff() { Message.Log($"{gameObject.name} is powered off!"); }
 
-        protected void NotifyInternalConnectivityChanged()
-        {
-            OnInternalConnectivityChanged?.Invoke(this);
-        }
-
         protected virtual void SetTerminals()
         {
             GetComponentsInChildren(true, terminals);
@@ -65,6 +60,11 @@ namespace Spark
             {
                 Message.LogWarning($"{gameObject.name} has no terminals attached to it, even though it is a {typeof(IElectricalDevice).Name}, was this intentional?");
             }
+        }
+
+        protected void NotifyInternalConnectivityChanged()
+        {
+            OnInternalConnectivityChanged?.Invoke(this);
         }
 
         private void Initialise()
