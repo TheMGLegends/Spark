@@ -41,6 +41,7 @@ namespace Spark
 
         public virtual bool CanCurrentPass(Terminal terminalA, Terminal terminalB)
         {
+            // TODO: Look into the logic of this more, I don't think it follows the laws of electricity
             if (terminals.Contains(terminalA) && terminals.Contains(terminalB) && terminalA != terminalB)
             {
                 return true;
