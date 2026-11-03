@@ -18,7 +18,6 @@ namespace Spark
         {
             base.SetTerminals();
 
-            // TODO: Might not need all of this since we will be creating the prefab instances correctly, so it's not up to the user to modify what terminals are on the object
             if (terminals.Count != 2)
             {
                 string terminalCount = terminals.Count > 1 ? $"are {terminals.Count} terminals" : $"is {terminals.Count} terminal";
