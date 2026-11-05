@@ -35,23 +35,37 @@ namespace Spark
 
             isPowered = powered;
 
-            if (IsPowered) { PowerOn(); }
-            else { PowerOff(); }
+            if (IsPowered) { OnPowerGained(); }
+            else { OnPowerLost(); }
+        }
+
+        public int GetTerminalCount(CircuitRole terminalType)
+        {
+            int count = 0;
+            foreach (Terminal terminal in terminals)
+            {
+                if (terminal && terminal.TerminalType == terminalType)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public virtual bool CanCurrentPass(Terminal terminalA, Terminal terminalB)
         {
-            // TODO: Look into the logic of this more, I don't think it follows the laws of electricity
-            if (terminals.Contains(terminalA) && terminals.Contains(terminalB) && terminalA != terminalB)
-            {
-                return true;
-            }
+            if (!terminals.Contains(terminalA) || !terminals.Contains(terminalB)) { return false; }
 
-            return false;
+            CircuitRole terminalTypeA = terminalA.TerminalType;
+            CircuitRole terminalTypeB = terminalB.TerminalType;
+
+            return (terminalTypeA == CircuitRole.Live && terminalTypeB == CircuitRole.Neutral) ||
+                   (terminalTypeA == CircuitRole.Neutral && terminalTypeB == CircuitRole.Live);
         }
 
-        protected virtual void PowerOn() { Message.Log($"{gameObject.name} is powered on!"); }
-        protected virtual void PowerOff() { Message.Log($"{gameObject.name} is powered off!"); }
+        protected virtual void OnPowerGained() { Message.Log($"{gameObject.name} is powered on!"); }
+        protected virtual void OnPowerLost() { Message.Log($"{gameObject.name} is powered off!"); }
 
         protected virtual void SetTerminals()
         {
