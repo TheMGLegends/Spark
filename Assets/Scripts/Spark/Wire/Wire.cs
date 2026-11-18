@@ -1,13 +1,19 @@
 using System;
 using UnityEngine;
+using UnityEngine.Splines;
 
 namespace Spark
 {
+    [RequireComponent(typeof(SplineContainer))]
+    [RequireComponent(typeof(SplineExtrude))]
     public class Wire : MonoBehaviour
     {
         [SerializeField, ReadOnly] private Terminal terminalA;
         [SerializeField, ReadOnly] private Terminal terminalB;
         [SerializeField] private CircuitRole wireType;
+
+        private SplineContainer splineContainer;
+        private SplineExtrude splineExtrude;
 
         public event Action<Wire> OnConnected;
         public event Action<Wire> OnDisconnected;
@@ -16,6 +22,16 @@ namespace Spark
         public Terminal TerminalB => terminalB;
         public bool IsFullyConnected => terminalA && terminalB;
         public CircuitRole WireType => wireType;
+
+        public SplineContainer SplineContainer => splineContainer;
+        public SplineExtrude SplineExtrude => splineExtrude;
+
+        private void Awake()
+        {
+            splineContainer = GetComponent<SplineContainer>();
+            splineExtrude = GetComponent<SplineExtrude>();
+            splineExtrude.Capped = true;
+        }
 
         private void Start()
         {

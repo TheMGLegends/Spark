@@ -36,9 +36,9 @@ namespace Spark
                 return;
             }
 
-            if (terminalAType == CircuitRole.Ground || terminalBType == CircuitRole.Ground)
+            if (terminalAType == CircuitRole.Earth || terminalBType == CircuitRole.Earth)
             {
-                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, but one of its terminals is a {CircuitRole.Ground} terminal. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
+                Message.LogError($"{gameObject.name} is a {typeof(Battery).Name}, but one of its terminals is a {CircuitRole.Earth} terminal. This type of device requires a {CircuitRole.Live} and {CircuitRole.Neutral} terminal.");
                 return;
             }
 

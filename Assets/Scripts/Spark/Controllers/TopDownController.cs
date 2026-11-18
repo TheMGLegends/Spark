@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Spark
 {
-    public class TopDownController : MonoBehaviour
+    public class TopDownController : BaseController
     {
         [Header("Movement Settings")]
         [SerializeField] private Vector2 movementSpeedBounds = new(1.0f, 10.0f);
-        [SerializeField] private float movementSpeed = 1.0f;
 
         [Header("Zoom Settings")]
         [SerializeField] private Vector2 zoomBounds = new(30.0f, 90.0f);
@@ -19,8 +19,7 @@ namespace Spark
         [Header("General Settings")]
         [SerializeField, Range(0.0f, 1.0f)] private float smoothTime = 0.25f;
 
-        [Header("References")]
-        [SerializeField] private new Camera camera;
+        private IA_TopDown topDown;
 
         // Zoom Settings
         private float targetZoom;
@@ -29,8 +28,6 @@ namespace Spark
         // Speed Adjustment Settings
         private float targetSpeed;
         private float speedVelocity;
-
-        private IA_TopDown topDown;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -83,18 +80,24 @@ namespace Spark
         }
 #endif
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             topDown = new IA_TopDown();
         }
 
         private void OnEnable()
         {
             topDown.Player.Enable();
+            topDown.Player.Interact.performed += OnInteract;
+            topDown.Player.HotbarSelect.performed += OnHotbarSelect;
         }
 
         private void OnDisable()
         {
+            topDown.Player.HotbarSelect.performed -= OnHotbarSelect;
+            topDown.Player.Interact.performed -= OnInteract;
             topDown.Player.Disable();
         }
 

@@ -64,8 +64,8 @@ namespace Spark
                    (terminalTypeA == CircuitRole.Neutral && terminalTypeB == CircuitRole.Live);
         }
 
-        protected virtual void OnPowerGained() { Message.Log($"{gameObject.name} is powered on!"); }
-        protected virtual void OnPowerLost() { Message.Log($"{gameObject.name} is powered off!"); }
+        protected virtual void OnPowerGained() {}
+        protected virtual void OnPowerLost() {}
 
         protected virtual void SetTerminals()
         {
@@ -77,6 +77,11 @@ namespace Spark
             }
         }
 
+        protected virtual void Cleanup()
+        {
+            CircuitSolver.Instance.UnregisterElectricalDevice(this);
+        }
+
         protected void NotifyInternalConnectivityChanged()
         {
             OnInternalConnectivityChanged?.Invoke(this);
@@ -85,11 +90,6 @@ namespace Spark
         private void Initialise()
         {
             CircuitSolver.Instance.RegisterElectricalDevice(this);
-        }
-
-        private void Cleanup()
-        {
-            CircuitSolver.Instance.UnregisterElectricalDevice(this);
         }
     }
 }

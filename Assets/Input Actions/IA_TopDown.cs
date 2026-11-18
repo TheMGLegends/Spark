@@ -121,6 +121,26 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f73edee-3339-4ca2-a263-005cbab760f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""HotbarSelect"",
+                    ""type"": ""Value"",
+                    ""id"": ""afcc975b-4d94-41c2-bc3e-365a84a86ee0"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -181,6 +201,116 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8094b15a-15e4-4a36-9bd7-4b6b2c27d765"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=0)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33862e07-4272-45b7-ba58-ea42f5fee0f9"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3b3f038-badd-488a-a99d-6e854cfdf02a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f41b790-6643-4d4c-b1a7-19747570011f"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""665855a7-7235-41e8-92c9-c277be5fea3e"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efe85274-497a-4266-82aa-1fe41947a460"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed9efece-8740-490c-849a-d8156a1f71a3"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=6)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ceaba8a-a773-4cde-a292-d9315123b88e"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=7)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4be894eb-969b-4598-8707-4ddee5fc15ff"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=8)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f491f4f7-015f-4ec4-8060-71ff6071b00d"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=9)"",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""HotbarSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a711cf05-7776-49fa-a6ed-bc08489f02f3"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
@@ -222,6 +352,17 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
                     ""action"": ""AdjustSpeed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95235539-fc83-4576-b457-c9b82eaee325"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -261,6 +402,8 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_AdjustSpeed = m_Player.FindAction("AdjustSpeed", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_HotbarSelect = m_Player.FindAction("HotbarSelect", throwIfNotFound: true);
     }
 
     ~@IA_TopDown()
@@ -344,6 +487,8 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_AdjustSpeed;
+    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_HotbarSelect;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -367,6 +512,14 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/AdjustSpeed".
         /// </summary>
         public InputAction @AdjustSpeed => m_Wrapper.m_Player_AdjustSpeed;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HotbarSelect".
+        /// </summary>
+        public InputAction @HotbarSelect => m_Wrapper.m_Player_HotbarSelect;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -402,6 +555,12 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
             @AdjustSpeed.started += instance.OnAdjustSpeed;
             @AdjustSpeed.performed += instance.OnAdjustSpeed;
             @AdjustSpeed.canceled += instance.OnAdjustSpeed;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @HotbarSelect.started += instance.OnHotbarSelect;
+            @HotbarSelect.performed += instance.OnHotbarSelect;
+            @HotbarSelect.canceled += instance.OnHotbarSelect;
         }
 
         /// <summary>
@@ -422,6 +581,12 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
             @AdjustSpeed.started -= instance.OnAdjustSpeed;
             @AdjustSpeed.performed -= instance.OnAdjustSpeed;
             @AdjustSpeed.canceled -= instance.OnAdjustSpeed;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @HotbarSelect.started -= instance.OnHotbarSelect;
+            @HotbarSelect.performed -= instance.OnHotbarSelect;
+            @HotbarSelect.canceled -= instance.OnHotbarSelect;
         }
 
         /// <summary>
@@ -509,5 +674,19 @@ public partial class @IA_TopDown: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAdjustSpeed(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotbarSelect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotbarSelect(InputAction.CallbackContext context);
     }
 }

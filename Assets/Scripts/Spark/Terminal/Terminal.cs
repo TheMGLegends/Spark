@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Splines;
 
 namespace Spark
 {
     [RequireComponent(typeof(BoxCollider))]
-    public class Terminal : MonoBehaviour
+    public class Terminal : MonoBehaviour, IInteractable
     {
         [SerializeField, DisplayName("Owner"), ReadOnly] private MonoBehaviour owningDevice;
         [SerializeField, ReadOnly] private Wire connectedWire;
@@ -26,6 +27,38 @@ namespace Spark
         private void OnDestroy()
         {
             Cleanup();
+        }
+
+        public void OnInteract(Player player)
+        {
+            if (!player || !player.IsHoldingItemType<Wire>() || IsWireConnected) { return; }
+
+            Vector3 pointPos = connectionPoint.position;
+            BezierKnot terminalKnot = new(new Unity.Mathematics.float3(pointPos.x, pointPos.y, pointPos.z));
+
+            if (player.TryGetHeldItem(out Wire wire))
+            {
+                wire.Connect(WireEnd.B, this);
+                player.HeldItem = null;
+
+                Spline spline = wire.SplineContainer.Spline;
+                spline.SetKnot(spline.Count - 1, terminalKnot);
+                wire.SplineExtrude.Rebuild();
+            }
+            else
+            {
+                if (player.TryInstantiateHeldItem(out wire))
+                {
+                    wire.Connect(WireEnd.A, this);
+
+                    Spline spline = wire.SplineContainer.Spline;
+                    spline.Add(terminalKnot, TangentMode.AutoSmooth);
+
+                    Vector3 playerPos = player.transform.position;
+                    BezierKnot playerKnot = new(new Unity.Mathematics.float3(playerPos.x, playerPos.y, playerPos.z));
+                    spline.Add(playerKnot, TangentMode.AutoSmooth);
+                }
+            }
         }
 
         public bool Attach(Wire wire)

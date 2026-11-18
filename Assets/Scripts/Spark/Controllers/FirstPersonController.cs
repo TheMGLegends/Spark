@@ -1,20 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace Spark
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class FirstPersonController : MonoBehaviour
+    public class FirstPersonController : BaseController
     {
-        [Header("Movement Settings")]
-        [SerializeField, Min(0.1f)] private float movementSpeed = 2.0f;
-
         [Header("Look Settings")]
         [SerializeField, Range(0.01f, 1.0f)] private float mouseSensitivity = 0.1f;
         [SerializeField] private Vector2 mouseRange = new(-90.0f, 90.0f);
 
-        [Header("References")]
-        [SerializeField] private new Camera camera;
-        [SerializeField, ReadOnly] private new Rigidbody rigidbody;
+        private new Rigidbody rigidbody;
+        private IA_FirstPerson firstPerson;
 
         // Movement Settings
         private Vector2 moveInput;
@@ -22,8 +19,6 @@ namespace Spark
         // Look Settings
         private float horizontalRotation;
         private float verticalRotation;
-
-        private IA_FirstPerson firstPerson;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -40,23 +35,29 @@ namespace Spark
         }
 #endif
 
-        private void Awake()
+        protected override void Awake()
         {
-            firstPerson = new IA_FirstPerson();
+            base.Awake();
 
             rigidbody = GetComponent<Rigidbody>();
             rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
             rigidbody.freezeRotation = true;
+
+            firstPerson = new IA_FirstPerson();
         }
 
         private void OnEnable()
         {
             firstPerson.Player.Enable();
+            firstPerson.Player.Interact.performed += OnInteract;
+            firstPerson.Player.HotbarSelect.performed += OnHotbarSelect;
         }
 
         private void OnDisable()
         {
+            firstPerson.Player.HotbarSelect.performed -= OnHotbarSelect;
+            firstPerson.Player.Interact.performed -= OnInteract;
             firstPerson.Player.Disable();
         }
 

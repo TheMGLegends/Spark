@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[3]'
       value: 
       objectReference: {fileID: 2100000, guid: 3675b5afd1829614085ab8325327be40, type: 2}
+    - target: {fileID: 1250489779411878640, guid: ad41987a0511a3c44a1e15cc262973af, type: 3}
+      propertyPath: terminalType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4837663016534636836, guid: ad41987a0511a3c44a1e15cc262973af, type: 3}
       propertyPath: m_Name
       value: NeutralTerminal

@@ -127,6 +127,7 @@ namespace Spark
                 Wire wire = leavingTerminal.ConnectedWire;
                 if (!wire) { continue; }
 
+                // TODO: Bugs with wiring earth to positive/negative and things like neutral to positive and live to negative
                 Terminal arrivedTerminal = wire.GetOtherTerminal(leavingTerminal);
                 if (!arrivedTerminal || !visitedTerminals.Add(arrivedTerminal)) { continue; }
 

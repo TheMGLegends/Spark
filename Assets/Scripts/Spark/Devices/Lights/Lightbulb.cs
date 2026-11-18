@@ -37,6 +37,7 @@ namespace Spark
 
             if (lightSocket.Detach(this))
             {
+                gameObject.SetActive(false);
                 connectedLightSocket = null;
                 return true;
             }
