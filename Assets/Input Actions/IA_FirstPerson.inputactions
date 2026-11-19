@@ -37,6 +37,16 @@
                     "priority": 0
                 },
                 {
+                    "name": "SecondaryInteract",
+                    "type": "Button",
+                    "id": "92a7fa7c-7a5c-4c3e-9743-d91380aa663f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
                     "name": "HotbarSelect",
                     "type": "Value",
                     "id": "00643ba8-478e-4e68-80ee-aef89c1b75c3",
@@ -232,6 +242,17 @@
                     "processors": "Scale(factor=9)",
                     "groups": ";Keyboard & Mouse",
                     "action": "HotbarSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d30dfe13-267d-4147-b4c5-6e446dfc757d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "SecondaryInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

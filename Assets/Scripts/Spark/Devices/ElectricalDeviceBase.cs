@@ -64,8 +64,8 @@ namespace Spark
                    (terminalTypeA == CircuitRole.Neutral && terminalTypeB == CircuitRole.Live);
         }
 
-        protected virtual void OnPowerGained() {}
-        protected virtual void OnPowerLost() {}
+        protected virtual void OnPowerGained() { }
+        protected virtual void OnPowerLost() { }
 
         protected virtual void SetTerminals()
         {

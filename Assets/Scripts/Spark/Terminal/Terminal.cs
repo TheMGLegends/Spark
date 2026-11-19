@@ -31,7 +31,7 @@ namespace Spark
 
         public void OnInteract(Player player)
         {
-            if (!player || !player.IsHoldingItemType<Wire>() || IsWireConnected) { return; }
+            if (!player || IsWireConnected || !player.IsHoldingItemType<Wire>()) { return; }
 
             Vector3 pointPos = connectionPoint.position;
             BezierKnot terminalKnot = new(new Unity.Mathematics.float3(pointPos.x, pointPos.y, pointPos.z));
@@ -45,20 +45,25 @@ namespace Spark
                 spline.SetKnot(spline.Count - 1, terminalKnot);
                 wire.SplineExtrude.Rebuild();
             }
-            else
+            else if (player.TryInstantiateHeldItem(out wire))
             {
-                if (player.TryInstantiateHeldItem(out wire))
-                {
-                    wire.Connect(WireEnd.A, this);
+                wire.Connect(WireEnd.A, this);
 
-                    Spline spline = wire.SplineContainer.Spline;
-                    spline.Add(terminalKnot, TangentMode.AutoSmooth);
+                Spline spline = wire.SplineContainer.Spline;
+                spline.Add(terminalKnot, TangentMode.AutoSmooth);
 
-                    Vector3 playerPos = player.transform.position;
-                    BezierKnot playerKnot = new(new Unity.Mathematics.float3(playerPos.x, playerPos.y, playerPos.z));
-                    spline.Add(playerKnot, TangentMode.AutoSmooth);
-                }
+                Vector3 playerPos = player.transform.position;
+                BezierKnot playerKnot = new(new Unity.Mathematics.float3(playerPos.x, playerPos.y, playerPos.z));
+                spline.Add(playerKnot, TangentMode.AutoSmooth);
             }
+        }
+
+        public void OnSecondaryInteract(Player player)
+        {
+            if (!player || !IsWireConnected) { return; }
+
+            Destroy(connectedWire.gameObject);
+            connectedWire.DisconnectFully();
         }
 
         public bool Attach(Wire wire)

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Spark
 {
@@ -91,12 +90,14 @@ namespace Spark
         {
             topDown.Player.Enable();
             topDown.Player.Interact.performed += OnInteract;
+            topDown.Player.SecondaryInteract.performed += OnSecondaryInteract;
             topDown.Player.HotbarSelect.performed += OnHotbarSelect;
         }
 
         private void OnDisable()
         {
             topDown.Player.HotbarSelect.performed -= OnHotbarSelect;
+            topDown.Player.SecondaryInteract.performed -= OnSecondaryInteract;
             topDown.Player.Interact.performed -= OnInteract;
             topDown.Player.Disable();
         }

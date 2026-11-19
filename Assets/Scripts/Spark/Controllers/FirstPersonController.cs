@@ -51,12 +51,14 @@ namespace Spark
         {
             firstPerson.Player.Enable();
             firstPerson.Player.Interact.performed += OnInteract;
+            firstPerson.Player.SecondaryInteract.performed += OnSecondaryInteract;
             firstPerson.Player.HotbarSelect.performed += OnHotbarSelect;
         }
 
         private void OnDisable()
         {
             firstPerson.Player.HotbarSelect.performed -= OnHotbarSelect;
+            firstPerson.Player.SecondaryInteract.performed -= OnSecondaryInteract;
             firstPerson.Player.Interact.performed -= OnInteract;
             firstPerson.Player.Disable();
         }

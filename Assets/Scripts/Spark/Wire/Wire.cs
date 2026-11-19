@@ -87,6 +87,11 @@ namespace Spark
             return false;
         }
 
+        public bool DisconnectFully()
+        {
+            return Disconnect(WireEnd.A) && Disconnect(WireEnd.B);
+        }
+
         public bool TryGetEnd(Terminal terminal, out WireEnd wireEnd)
         {
             if (terminal)

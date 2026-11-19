@@ -123,6 +123,16 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
                     ""priority"": 0
                 },
                 {
+                    ""name"": ""SecondaryInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""92a7fa7c-7a5c-4c3e-9743-d91380aa663f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
                     ""name"": ""HotbarSelect"",
                     ""type"": ""Value"",
                     ""id"": ""00643ba8-478e-4e68-80ee-aef89c1b75c3"",
@@ -320,6 +330,17 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
                     ""action"": ""HotbarSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d30dfe13-267d-4147-b4c5-6e446dfc757d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""SecondaryInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -359,6 +380,7 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_SecondaryInteract = m_Player.FindAction("SecondaryInteract", throwIfNotFound: true);
         m_Player_HotbarSelect = m_Player.FindAction("HotbarSelect", throwIfNotFound: true);
     }
 
@@ -443,6 +465,7 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_SecondaryInteract;
     private readonly InputAction m_Player_HotbarSelect;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -467,6 +490,10 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SecondaryInteract".
+        /// </summary>
+        public InputAction @SecondaryInteract => m_Wrapper.m_Player_SecondaryInteract;
         /// <summary>
         /// Provides access to the underlying input action "Player/HotbarSelect".
         /// </summary>
@@ -506,6 +533,9 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @SecondaryInteract.started += instance.OnSecondaryInteract;
+            @SecondaryInteract.performed += instance.OnSecondaryInteract;
+            @SecondaryInteract.canceled += instance.OnSecondaryInteract;
             @HotbarSelect.started += instance.OnHotbarSelect;
             @HotbarSelect.performed += instance.OnHotbarSelect;
             @HotbarSelect.canceled += instance.OnHotbarSelect;
@@ -529,6 +559,9 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @SecondaryInteract.started -= instance.OnSecondaryInteract;
+            @SecondaryInteract.performed -= instance.OnSecondaryInteract;
+            @SecondaryInteract.canceled -= instance.OnSecondaryInteract;
             @HotbarSelect.started -= instance.OnHotbarSelect;
             @HotbarSelect.performed -= instance.OnHotbarSelect;
             @HotbarSelect.canceled -= instance.OnHotbarSelect;
@@ -619,6 +652,13 @@ public partial class @IA_FirstPerson: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondaryInteract" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondaryInteract(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "HotbarSelect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

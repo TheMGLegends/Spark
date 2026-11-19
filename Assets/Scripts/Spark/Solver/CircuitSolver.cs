@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Spark
 {
@@ -127,7 +128,6 @@ namespace Spark
                 Wire wire = leavingTerminal.ConnectedWire;
                 if (!wire) { continue; }
 
-                // TODO: Bugs with wiring earth to positive/negative and things like neutral to positive and live to negative
                 Terminal arrivedTerminal = wire.GetOtherTerminal(leavingTerminal);
                 if (!arrivedTerminal || !visitedTerminals.Add(arrivedTerminal)) { continue; }
 
@@ -138,15 +138,17 @@ namespace Spark
                     continue;
                 }
 
-                reachedDevices.Add(electricalDevice);
-
+                bool canPassThrough = false;
                 foreach (Terminal otherTerminal in electricalDevice.Terminals)
                 {
                     if (otherTerminal != arrivedTerminal && electricalDevice.CanCurrentPass(arrivedTerminal, otherTerminal))
                     {
+                        canPassThrough = true;
                         pendingTerminals.Push(otherTerminal);
                     }
                 }
+
+                if (canPassThrough) { reachedDevices.Add(electricalDevice); }
             }
 
             return reachedDevices;

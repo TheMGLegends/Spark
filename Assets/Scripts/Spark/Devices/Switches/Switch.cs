@@ -23,11 +23,6 @@ namespace Spark
         public void OnInteract(Player player)
         {
             animator.SetTrigger(IsSwitchingHash);
-            ToggleClosed();
-        }
-
-        public void ToggleClosed()
-        {
             isClosed = !isClosed;
             NotifyInternalConnectivityChanged();
         }

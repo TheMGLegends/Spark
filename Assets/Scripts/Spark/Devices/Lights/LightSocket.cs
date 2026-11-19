@@ -26,14 +26,9 @@ namespace Spark
 
         public void OnInteract(Player player)
         {
-            if (!player || !canInteract) { return; }
+            if (!player || !canInteract || connectedLightbulb || !player.IsHoldingItemType<Lightbulb>()) { return; }
 
-            if (connectedLightbulb && connectedLightbulb.Disconnect(this))
-            {
-                canInteract = false;
-                animator.SetBool(IsAttachingHash, false);
-            }
-            else if (player.IsHoldingItemType<Lightbulb>() && player.TryInstantiateHeldItem(out Lightbulb lightbulb))
+            if (player.TryInstantiateHeldItem(out Lightbulb lightbulb))
             {
                 lightbulb.gameObject.SetActive(false);
                 if (lightbulb.Connect(this))
@@ -41,6 +36,18 @@ namespace Spark
                     canInteract = false;
                     animator.SetBool(IsAttachingHash, true);
                 }
+            }
+        }
+
+        public void OnSecondaryInteract(Player player)
+        {
+            if (!player || !canInteract || !connectedLightbulb) { return; }
+
+            Destroy(connectedLightbulb.gameObject);
+            if (connectedLightbulb.Disconnect(this))
+            {
+                canInteract = false;
+                animator.SetBool(IsAttachingHash, false);
             }
         }
 
@@ -57,7 +64,6 @@ namespace Spark
         {
             if (!lightbulb || !IsLightbulbConnected || connectedLightbulb != lightbulb) { return false; }
 
-            Destroy(connectedLightbulb.gameObject);
             connectedLightbulb = null;
             NotifyInternalConnectivityChanged();
             return true;

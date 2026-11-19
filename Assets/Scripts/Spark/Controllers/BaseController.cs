@@ -24,14 +24,17 @@ namespace Spark
 
         protected void OnInteract(InputAction.CallbackContext context)
         {
-            if (!camera) { return; }
-
-            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
+            if (TryGetInteractable(out IInteractable interactable))
             {
-                if (hit.transform.TryGetComponent(out IInteractable interactable))
-                {
-                    interactable.OnInteract(player);
-                }
+                interactable.OnInteract(player);
+            }
+        }
+
+        protected void OnSecondaryInteract(InputAction.CallbackContext context)
+        {
+            if (TryGetInteractable(out IInteractable interactable))
+            {
+                interactable.OnSecondaryInteract(player);
             }
         }
 
@@ -41,6 +44,19 @@ namespace Spark
 
             int slotIndex = Mathf.RoundToInt(context.ReadValue<float>());
             player.SelectHotbarSlot(slotIndex);
+        }
+
+        private bool TryGetInteractable(out IInteractable interactable)
+        {
+            interactable = null;
+            if (!camera) { return false; }
+
+            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
+            {
+                hit.transform.TryGetComponent(out interactable);
+            }
+
+            return interactable != null;
         }
     }
 }
