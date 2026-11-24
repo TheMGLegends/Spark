@@ -48,18 +48,18 @@ namespace Spark
             return HeldItemType.TryGetComponent<T>(out _);
         }
 
-        public bool TryGetHeldItem<T>(out T item) where T : MonoBehaviour
+        public bool TryGetHeldItem<T>(out T item)
         {
             if (HeldItem && HeldItem.TryGetComponent(out item))
             {
                 return true;
             }
 
-            item = null;
+            item = default;
             return false;
         }
 
-        public bool TryInstantiateHeldItem<T>(out T item) where T : MonoBehaviour
+        public bool TryInstantiateHeldItem<T>(out T item)
         {
             HeldItem = Instantiate(HeldItemType);
             return TryGetHeldItem(out item);

@@ -1,6 +1,8 @@
+using UnityEngine;
+
 namespace Spark
 {
-    public class Battery : ElectricalDeviceBase, IPowerSource
+    public class Battery : ElectricalDeviceBase, IPowerSource, IPlaceable
     {
         private Terminal positiveTerminal;
         private Terminal negativeTerminal;
@@ -8,6 +10,16 @@ namespace Spark
         public Terminal PositiveTerminal => positiveTerminal;
 
         public Terminal NegativeTerminal => negativeTerminal;
+
+        public void OnPlace(RaycastHit hit, Transform playerTransform)
+        {
+            if (hit.normal != Vector3.up) { Destroy(gameObject); return; }
+
+            Vector3 forward = -playerTransform.forward;
+            Vector3 upward = hit.normal;
+
+            transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(forward, upward));
+        }
 
         public override bool CanCurrentPass(Terminal terminalA, Terminal terminalB)
         {

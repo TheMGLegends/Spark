@@ -27,6 +27,12 @@ namespace Spark
             if (TryGetInteractable(out IInteractable interactable))
             {
                 interactable.OnInteract(player);
+                return;
+            }
+
+            if (TryGetPlaceable(out IPlaceable placeable, out RaycastHit hit))
+            {
+                placeable.OnPlace(hit, player.transform);
             }
         }
 
@@ -49,14 +55,29 @@ namespace Spark
         private bool TryGetInteractable(out IInteractable interactable)
         {
             interactable = null;
-            if (!camera) { return false; }
 
-            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
+            if (TryGetHit(out RaycastHit hit))
             {
                 hit.transform.TryGetComponent(out interactable);
             }
 
             return interactable != null;
+        }
+
+        private bool TryGetPlaceable(out IPlaceable placeable, out RaycastHit hit)
+        {
+            placeable = null;
+            hit = default;
+
+            if (!player || !player.IsHoldingItemType<IPlaceable>()) { return false; }
+
+            return player.TryInstantiateHeldItem(out placeable) && TryGetHit(out hit);
+        }
+
+        private bool TryGetHit(out RaycastHit hit)
+        {
+            hit = default;
+            return camera ? Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactDistance, interactableMask) : false;
         }
     }
 }

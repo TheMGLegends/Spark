@@ -4,7 +4,7 @@ namespace Spark
 {
     [RequireComponent(typeof(BoxCollider))]
     [RequireComponent(typeof(Animator))]
-    public class LightSocket : ElectricalDeviceBase, IInteractable
+    public class LightSocket : ElectricalDeviceBase, IInteractable, IPlaceable
     {
         [SerializeField, ReadOnly] private Lightbulb connectedLightbulb;
         [SerializeField] private Transform connectionPoint;
@@ -49,6 +49,15 @@ namespace Spark
                 canInteract = false;
                 animator.SetBool(IsAttachingHash, false);
             }
+        }
+
+        public void OnPlace(RaycastHit hit, Transform playerTransform)
+        {
+           Vector3 forward = hit.normal == Vector3.down ? playerTransform.forward :
+                             hit.normal == Vector3.up ? -playerTransform.forward : Vector3.down;
+            Vector3 upward = hit.normal;
+
+            transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(forward, upward));
         }
 
         public bool Attach(Lightbulb lightbulb)

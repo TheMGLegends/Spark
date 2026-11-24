@@ -4,7 +4,7 @@ namespace Spark
 {
     [RequireComponent(typeof(BoxCollider))]
     [RequireComponent(typeof(Animator))]
-    public class Switch : ElectricalDeviceBase, IInteractable
+    public class Switch : ElectricalDeviceBase, IInteractable, IPlaceable
     {
         [SerializeField, ReadOnly] private bool isClosed;
 
